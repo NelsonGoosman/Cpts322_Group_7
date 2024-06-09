@@ -1,6 +1,6 @@
 <div class="login-container">
     <h2>Log in</h2>
-    <p>New to Acme Food Bank? <a href="#">Sign up</a></p>
+    <p>New to Acme Food Bank? <a routerLink='/create-account'>Sign up</a></p>
     <form (ngSubmit)="login()">
       <label for="email">Email:</label>
       <input type="email" id="email" [(ngModel)]="email" name="name">
@@ -10,5 +10,5 @@
     
       <button class="login-button" type="submit">Submit</button>
     </form>
-    <button class="sso-login">Create Account</button>
+    <button class="sso-login">Forgot Password?</button>
   </div>
