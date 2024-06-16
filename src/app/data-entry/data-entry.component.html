@@ -14,10 +14,14 @@
           <td><input type="text" [(ngModel)]="item.name"></td>
           <td><input type="text" [(ngModel)]="item.description"></td>
           <td><input type="date" [(ngModel)]="item.expirationDate"></td>
-          <td><input type="number" [(ngModel)]="item.price" step="0.01"></td>
+          <td><input type="number" [(ngModel)]="item.price" step="1.0"></td>
         </tr>
       </tbody>
     </table>
     <button class="add-row-button" (click)="addRow()">+</button>
+    <button class="submit-button" (click)="submitData()">Submit</button>
+    @if (totalItems >= 10){
+      <a>Item limit! Please send Items to database before adding more.</a>
+    }
   </div>
   
