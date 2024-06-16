@@ -2,14 +2,14 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 
-const User = require('./../models/User');
+const User = require('../models/user');
 
 router.post('/signup', (req,res) =>{
     let { name, email, password } = req.body;
     name = name.trim(); // .trim() removes whitespace
     email = email.trim();
     password = password.trim();
-    console.log("Recieved data from frontend rahhhh")
+    console.log("Recieved data from frontend rahhhh");
     if(name == " " || email == "" || password == ""){// chceking for empty fields
         res.json({
             status: "FAILED",

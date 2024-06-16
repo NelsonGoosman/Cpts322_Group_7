@@ -35,10 +35,9 @@ export class CreateAccountComponent {
 
   
 
-    this.http.post('/Server/user/signup', userdata).subscribe({
-      next: (v: any) => alert(v),
-      error: (e: any) => alert(e)
-  });
+    this.http.post('http://localhost:3000/user/signup', userdata).subscribe((response) => {
+      console.log(response);
+    })
     //this.router.navigate(['/home'])
   }
 }
