@@ -1,3 +1,4 @@
+<h1>Welcome Back! Login or Create account to get started</h1>
 <div class="login-container">
     <h2>Log in</h2>
     <p>New to Acme Food Bank? <a routerLink='/create-account'>Sign up</a></p>
@@ -11,4 +12,7 @@
       <button class="login-button" type="submit">Submit</button>
     </form>
     <button class="sso-login">Forgot Password?</button>
+    @if (loginAttempt && !validUser) {
+      <p color="red"> {{loginStatus}} </p>
+    }
   </div>

@@ -1,8 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Injectable } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { homedir } from 'os';
-import { HomeComponent } from '../home/home.component';
-import { RouterLink, RouterModule, Router } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -12,15 +11,41 @@ import { RouterLink, RouterModule, Router } from '@angular/router';
   styleUrl: './login.component.css'
 })
 
+@Injectable({providedIn: 'root'})
 export class LoginComponent {
-  email = "";
-  password = "";
-  constructor(private router: Router){
 
-  }
+  email: string = "";
+  password: string = "";
+  validUser: boolean = false;
+  loginAttempt: boolean = false;
+  loginStatus: string = "";
+  constructor(private router: Router, private http: HttpClient){}
+
   login(){
-    
-      this.router.navigate(['/home'])
+
+    const loginData = {
+      email: this.email,
+      password: this.password
+    };
+    // set up api routs at /login
+    this.http.post('/server/api/user/signin', loginData).subscribe( //idk if this route is correct
+      (response: any) => {
+        if (response.validUser){ //response needs to contain valid user boolean
+          this.validUser = true;
+          this.router.navigate(['/home'])
+        } else{
+          this.validUser = false;
+          this.loginStatus = response.message;
+        }
+      },
+      (error) => {
+        this.validUser = false;
+        alert('An error occurred during login');
+        console.error('Login error', error);
+      }
+    );
+
+    this.loginAttempt = true;
   }
   
 
