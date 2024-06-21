@@ -12,7 +12,7 @@
       <button class="login-button" type="submit">Submit</button>
     </form>
     <button class="sso-login">Forgot Password?</button>
-    @if (loginAttempt && !validUser) {
-      <p color="red"> {{loginStatus}} </p>
+    @if (showError == true){
+      <p style="color:red">Error: {{errorMessage}}</p>
     }
   </div>

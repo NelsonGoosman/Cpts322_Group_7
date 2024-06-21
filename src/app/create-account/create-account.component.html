@@ -10,5 +10,9 @@
     
       <button class="login-button" type="submit">Create Account</button>
     </form>
+    @if (showError == true){
+      <p style="color:red">Error: {{errorMessage}}</p>
+    }
   </div>
+  
 
