@@ -9,7 +9,6 @@ router.post('/signup', (req,res) =>{
     name = name.trim(); // .trim() removes whitespace
     email = email.trim();
     password = password.trim();
-    console.log("Recieved data from frontend rahhhh");
     if(name == " " || email == "" || password == ""){// chceking for empty fields
         res.json({
             status: "FAILED",
