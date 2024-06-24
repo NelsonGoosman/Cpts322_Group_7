@@ -6,6 +6,7 @@ const cors = require('cors');
 const PORT = process.env.PORT || 3000;
 
 const UserRouter = require('./api/user');
+const ItemRouter = require('./api/item')
 
 app.use(cors({
     origin: 'http://localhost:4200', 
@@ -13,10 +14,14 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization'] 
   }));
 
-app.use(bodyParser());
+//app.use(bodyParser());
+app.use(express.json())
 
 app.use('/user', UserRouter);
+app.use('/item', ItemRouter);
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 })
+

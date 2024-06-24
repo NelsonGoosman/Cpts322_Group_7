@@ -16,9 +16,8 @@ export class LoginComponent {
 
   email: string = "";
   password: string = "";
-  validUser: boolean = false;
-  loginAttempt: boolean = false;
-  loginStatus: string = "";
+  showError: boolean = false;
+  errorMessage: string = "";
   constructor(private router: Router, private http: HttpClient){}
 
   login(){
@@ -28,24 +27,16 @@ export class LoginComponent {
       password: this.password
     };
     // set up api routs at /login
-    this.http.post('/server/api/user/signin', loginData).subscribe( //idk if this route is correct
-      (response: any) => {
-        if (response.validUser){ //response needs to contain valid user boolean
-          this.validUser = true;
-          this.router.navigate(['/home'])
-        } else{
-          this.validUser = false;
-          this.loginStatus = response.message;
-        }
-      },
-      (error) => {
-        this.validUser = false;
-        alert('An error occurred during login');
-        console.error('Login error', error);
+    this.http.post<any>('http://localhost:3000/user/signin', loginData).subscribe((response) => {
+      console.log(response);
+      if (response.status == "SUCCESS"){
+        this.router.navigate(['/home'])
+      }else{
+        this.showError = true;
+        this.errorMessage = response.message;
       }
-    );
-
-    this.loginAttempt = true;
+    });
+  
   }
   
 

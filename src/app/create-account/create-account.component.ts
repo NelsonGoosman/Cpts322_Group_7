@@ -19,13 +19,10 @@ export class CreateAccountComponent {
   newEmail = "";
   newPassword = "";
   name = "TestName";
-  constructor(private router: Router, private http: HttpClient){
-
-  }
-  dataSent(){
-    alert();
-  }
-  error(){}
+  showError = false;
+  errorMessage = "";
+  constructor(private router: Router, private http: HttpClient){}
+ 
   create(){
     const userdata = {
       name: this.name,
@@ -35,9 +32,16 @@ export class CreateAccountComponent {
 
   
 
-    this.http.post('http://localhost:3000/user/signup', userdata).subscribe((response) => {
+    this.http.post<any>('http://localhost:3000/user/signup', userdata).subscribe((response) => {
       console.log(response);
-    })
-    //this.router.navigate(['/home'])
+      if (response.status == "SUCCESS"){
+        alert("Account created successfully! Close this message to proceed to login.")
+        this.router.navigate(['/login'])
+      }else{
+        this.showError = true;
+        this.errorMessage = response.message;
+      }
+    });
+    
   }
 }
