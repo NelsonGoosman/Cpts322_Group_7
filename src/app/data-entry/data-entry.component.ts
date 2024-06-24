@@ -2,7 +2,6 @@ import { Component, Injectable } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgFor } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { stringify } from 'node:querystring';
 
 export interface Item{
   name: string;
