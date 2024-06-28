@@ -1,24 +1,21 @@
-<div class="container">
-    <h1>Inventory List</h1>
-    <table class="table">
+  <h1>Inventory List</h1>
+  <table class="table">
       <thead>
-        <tr>
-          <th>Name</th>
-          <th>Quantity</th>
-          <th>Expiration Date</th>
-          <th>Cost</th>
-          <th>Donated by</th>
-        </tr>
+          <tr>
+              <th>Name</th>
+              <th>Quantity</th>
+              <th>Expiration Date</th>
+              <th>Cost</th>
+              <th>Donated by</th>
+          </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of items">
-          <td>{{ item.name }}</td>
-          <td>{{ item.quantity }}</td>
-          <td>{{ item.expirationDate}}</td>
-          <td>{{ item.cost }}</td>
-          <td>{{ item.donatedBy }}</td>
-        </tr>
-    </tbody>
-    </table>
-</div>
-   
+          <tr *ngFor="let item of items">
+              <td>{{ item.name }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>{{ item.expiration  }}</td>
+              <td>{{ item.cost }}</td>
+              <td>{{ item.donatedBy }}</td>
+          </tr>
+      </tbody>
+  </table>

@@ -8,7 +8,7 @@ import { ViewReportsComponent } from './view-reports/view-reports.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, LoginComponent, RouterLink, RouterLinkActive, HomeComponent, CreateAccountComponent, ViewEntriesComponent, ViewReportsComponent],
+  imports: [RouterOutlet, LoginComponent, RouterLink, RouterLinkActive, HomeComponent, CreateAccountComponent, ViewReportsComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
