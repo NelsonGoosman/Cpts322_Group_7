@@ -65,7 +65,7 @@ export class DataEntryComponent {
         console.log(response);
         this.showError = false;
       });
-
+      this.items = []
     }else if (this.totalItems == 0)
     {
       this.errorMessage = "Error: No items to submit";
