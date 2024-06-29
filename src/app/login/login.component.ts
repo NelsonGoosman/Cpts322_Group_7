@@ -1,8 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Injectable } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { homedir } from 'os';
-import { HomeComponent } from '../home/home.component';
-import { RouterLink, RouterModule, Router } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -12,15 +11,32 @@ import { RouterLink, RouterModule, Router } from '@angular/router';
   styleUrl: './login.component.css'
 })
 
+@Injectable({providedIn: 'root'})
 export class LoginComponent {
-  email = "";
-  password = "";
-  constructor(private router: Router){
 
-  }
+  email: string = "";
+  password: string = "";
+  showError: boolean = false;
+  errorMessage: string = "";
+  constructor(private router: Router, private http: HttpClient){}
+
   login(){
-    
-      this.router.navigate(['/home'])
+
+    const loginData = {
+      email: this.email,
+      password: this.password
+    };
+    // set up api routs at /login
+    this.http.post<any>('http://localhost:3000/user/signin', loginData).subscribe((response) => {
+      console.log(response);
+      if (response.status == "SUCCESS"){
+        this.router.navigate(['/home'])
+      }else{
+        this.showError = true;
+        this.errorMessage = response.message;
+      }
+    });
+  
   }
   
 
