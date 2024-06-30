@@ -2,6 +2,7 @@ import { Component, Injectable } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgFor } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 export interface Item{
   name: string;
@@ -15,7 +16,7 @@ export interface Item{
 @Component({
   selector: 'app-data-entry',
   standalone: true,
-  imports: [FormsModule, NgFor],
+  imports: [FormsModule, NgFor, RouterModule],
   templateUrl: './data-entry.component.html',
   styleUrl: './data-entry.component.css'
 })

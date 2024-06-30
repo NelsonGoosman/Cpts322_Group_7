@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { OnInit, Input, Injectable } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-view-reports',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './view-reports.component.html',
   styleUrl: './view-reports.component.css'
 })

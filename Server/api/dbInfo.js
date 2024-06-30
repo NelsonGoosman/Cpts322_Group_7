@@ -5,7 +5,7 @@ const Item = require('../models/item');
 
 const getAllDates = async () => {
     try {
-        const items = await Item.find(); 
+        const items = await Item.find({}); 
         const dates = items.map(item => item.date); 
         console.log(dates);
         return dates;

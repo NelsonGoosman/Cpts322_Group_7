@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-view-entries',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './view-entries.component.html',
   styleUrl: './view-entries.component.css'
 })
