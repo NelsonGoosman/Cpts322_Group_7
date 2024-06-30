@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { OnInit, Input, Injectable } from '@angular/core';
 
 @Component({
   selector: 'app-view-reports',
@@ -7,6 +9,14 @@ import { Component } from '@angular/core';
   templateUrl: './view-reports.component.html',
   styleUrl: './view-reports.component.css'
 })
-export class ViewReportsComponent {
 
+@Injectable({providedIn: 'root'})
+export class ViewReportsComponent {
+  constructor(private http: HttpClient){}
+
+  ngOnInit() {
+    this.http.get<any>('http://localhost:3000/dbInfo/expirationDates').subscribe((response) => {
+      console.log(response);
+    });
+  }
 }
