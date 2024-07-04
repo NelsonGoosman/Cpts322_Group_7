@@ -20,17 +20,17 @@ import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
   templateUrl: './view-reports.component.html',
   styleUrl: './view-reports.component.css'
 })
-
 @Injectable({providedIn: 'root'})
 export class ViewReportsComponent {
   constructor(private http: HttpClient){}
+
+  e = [{ title: 'event 1', date: '2024-07-07' }]
 
   calendarOptions: CalendarOptions = {
     plugins: [dayGridPlugin],
     weekends: true,
     initialView: 'dayGridMonth',
-    events: [
-    ]
+    events: this.e
   };
 
   chartOptions = {
@@ -54,7 +54,6 @@ export class ViewReportsComponent {
   donators = [];
   donators_map = new Map();
   showCalendar = true;
-
   ngOnInit() {
     this.http.get<any>('http://localhost:3000/dbInfo/expirationDates').subscribe((response) => {
       this.expirationDates = response[0];
@@ -84,20 +83,15 @@ export class ViewReportsComponent {
 
     for (let i = 0; i < this.expirationDates.length; i++){
       if (this.expirationDates[i] !== ""){
-        const newEvent: CalendarEvent = {
-          title: this.names[i],
-          start: new Date(this.expirationDates[i]),
-        }
+        this.e.push({title: this.names[i], date: this.expirationDates[i]});
       }
     }
     for (const [key, value] of this.donators_map) {
       this.chartOptions.data[0].dataPoints.push({label: key, y: value});
     }
-    console.log(this.donators_map);
   }
 
   buttonClick(){
-    this.showCalendar = (this.showCalendar === true) ? false : true;
-    console.log("Clicked");
+    this.showCalendar = !this.showCalendar;
   }
 }
