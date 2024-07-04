@@ -1,4 +1,5 @@
 <nav class="nav">
+
     <ul>
         <li><a href="/home">Home</a></li>
         <li><a routerLink="/view-entries">View Food Entries</a></li>
@@ -7,8 +8,12 @@
         <li><a href="#">Logout</a></li>
     </ul>
 </nav>
+<button type="button"(click)="buttonClick()">Toggle View</button>
 <div>
     <h1>Data Analytics</h1>
-    <full-calendar [options]="calendarOptions"></full-calendar>
-    <canvasjs-chart [options]="chartOptions"></canvasjs-chart>    
+    @if (showCalendar){
+        <full-calendar [options]="calendarOptions"></full-calendar>
+    }@else {
+        <canvasjs-chart [options]="chartOptions"></canvasjs-chart>    
+    }
   </div>

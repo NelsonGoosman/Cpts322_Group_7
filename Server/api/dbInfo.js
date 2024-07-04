@@ -5,9 +5,10 @@ const Item = require('../models/item');
 
 const getAllDates = async () => {
     try {
-        const items = await Item.find({}, 'expiration'); 
+        const items = await Item.find({}); 
         const dates = items.map(item => item.expiration); 
-        return dates;
+        const names = items.map(item => item.name); 
+        return [dates, names];
     } catch (err) {
         console.error('Error fetching dates:', err);
         throw err;
@@ -39,7 +40,6 @@ const getDonaters = async () => {
     try {
         const donors = await Item.find({}, "donatedBy"); 
         noEmpty = donors.map(item => item.donatedBy);
-        console.log(noEmpty);
         return noEmpty.filter(str => str !== '');
     } catch (err) {
         console.error('Error fetching donors:', err);
@@ -50,7 +50,7 @@ const getDonaters = async () => {
 router.get('/expirationDates', async (req, res) => {
     try {
         const dates = await getAllDates();
-        res.status(200).json(dates.filter(str => str !== ''));
+        res.status(200).send(dates);
     } catch (err) {
         res.status(500).json({ error: 'An error occurred while fetching dates.' });
     }
@@ -77,7 +77,6 @@ router.get('/numItems', async (req, res) => {
 router.get('/donaters', async (req, res) => {
     try {
         const donors = await getDonaters();
-        
         res.status(200).send(donors);
     } catch (err) {
         res.status(500).json({ error: 'An error occurred while fetching donors.' });

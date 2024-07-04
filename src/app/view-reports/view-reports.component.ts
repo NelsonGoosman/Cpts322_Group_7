@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { Calendar, CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import { CalendarCommonModule } from 'angular-calendar';
+import { CalendarCommonModule, CalendarEvent } from 'angular-calendar';
 // npm install @fullcalendar/angular @fullcalendar/core @fullcalendar/daygrid
 //https://fullcalendar.io/docs/angular
 // npm install @canvasjs/angular-charts
@@ -27,39 +27,38 @@ export class ViewReportsComponent {
 
   calendarOptions: CalendarOptions = {
     plugins: [dayGridPlugin],
+    weekends: true,
     initialView: 'dayGridMonth',
-    weekends: false,
     events: [
-      { title: 'Meeting', start: new Date() },
-      { title: 'event 2', date: '2024-06-17' }
     ]
   };
 
   chartOptions = {
     title: {
-      text: "Basic Column Chart in Angular"
+      text: "Most Frequent Donors"
     },
     data: [{
-      type: "column",
+      type: "bar",
+      indexLabel: "{y}",
       dataPoints: [
-      { label: "Apple",  y: 10  },
-      { label: "Orange", y: 15  },
-      { label: "Banana", y: 25  },
-      { label: "Mango",  y: 30  },
-      { label: "Grape",  y: 28  }
+        {label: "Test", y: 10}
       ]
     }]                
     };
 
+
   expirationDates = [];
+  names = [];
   average = 0;
   numItems = 0;
   donators = [];
   donators_map = new Map();
+  showCalendar = true;
 
   ngOnInit() {
     this.http.get<any>('http://localhost:3000/dbInfo/expirationDates').subscribe((response) => {
-      this.expirationDates = response;
+      this.expirationDates = response[0];
+      this.names = response[1];
     });
 
     this.http.get<any>('http://localhost:3000/dbInfo/average').subscribe((response) => {
@@ -74,13 +73,31 @@ export class ViewReportsComponent {
       this.donators = response;
     });
 
-    this.donators.forEach(name => {
+    this.donators.forEach((name: string) => {
       if (this.donators_map.has(name)) {
           this.donators_map.set(name, this.donators_map.get(name)! + 1);
       } else {
           this.donators_map.set(name, 1);
       }
-  });
+    });
+    console.log("Page Constructed")
 
+    for (let i = 0; i < this.expirationDates.length; i++){
+      if (this.expirationDates[i] !== ""){
+        const newEvent: CalendarEvent = {
+          title: this.names[i],
+          start: new Date(this.expirationDates[i]),
+        }
+      }
+    }
+    for (const [key, value] of this.donators_map) {
+      this.chartOptions.data[0].dataPoints.push({label: key, y: value});
+    }
+    console.log(this.donators_map);
+  }
+
+  buttonClick(){
+    this.showCalendar = (this.showCalendar === true) ? false : true;
+    console.log("Clicked");
   }
 }
