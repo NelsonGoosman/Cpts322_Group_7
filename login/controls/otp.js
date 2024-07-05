@@ -1,8 +1,36 @@
 const OTP = require('../models/otpSchema');
+const User = require('../models/User');
 const { generateOTP } = require('./../util/generateOTP');
 const sendEmail = require('./../util/email');
 const AUTH_EMAIL = process.env;
-const dataHash = require('./../util/dataHash');
+const { dataHash, verifyHash } = require('./../util/dataHash');
+
+const verifyOTP = async ({ email, otp }) => {
+    try {
+        if (!(email && otp)) {
+            throw new Error("Invalid value for email, otp.");
+        }
+        const matchOTP = await OTP.findOne({ email,  });
+
+        if (!matchOTP) {
+            throw new Error("OTP not found!");
+        }
+        const {expires_on} = matchOTP;
+
+        if (expires_on < Date.now()) {
+            await OTP.deleteOne({ email });
+            throw new Error("OTP expired!");
+        }
+        
+        const hashedOTP = matchOTP.otp;
+        const validOTP = await verifyHash(otp, hashedOTP);
+        return validOTP;
+    
+
+    }catch (err){
+        throw err;
+    }
+}
 
 const sendOTP = async ({ email, subject, message, duration = 1 }) => {
     try {
@@ -26,8 +54,8 @@ const sendOTP = async ({ email, subject, message, duration = 1 }) => {
         const newOTP = new OTP({
             email,
             otp: hashedOTP,
-            created_on: new Date,
-            expires_on: new Date + 3600000 * +duration,
+            created_on: Date.now(),
+            expires_on: Date.now() + 3600000 * +duration,
         });
         const OTPrec = await newOTP.save();
         return OTPrec;
@@ -36,4 +64,12 @@ const sendOTP = async ({ email, subject, message, duration = 1 }) => {
         throw err;
     }
 };
-module.exports = { sendOTP };
+const deleteOTP = async (email) => {
+    try {
+        await OTP.deleteOne({ email })
+    }catch(err){
+        throw err;
+    }
+};
+
+module.exports = { sendOTP, verifyOTP, deleteOTP };

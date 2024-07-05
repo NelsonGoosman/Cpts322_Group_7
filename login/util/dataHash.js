@@ -8,4 +8,12 @@ const dataHash = async (data, saltRounds = 10) => {
         throw err;
     }
 };
-module.exports = dataHash;
+const verifyHash = async (unhashed, hashed) => {
+    try {
+        const isValid = await bcrypt.compare(unhashed, hashed);
+        return isValid;
+    }catch(err){
+        throw err;
+    }
+};
+module.exports = { dataHash, verifyHash };
