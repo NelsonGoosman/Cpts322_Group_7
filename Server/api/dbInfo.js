@@ -18,8 +18,15 @@ const getAllDates = async () => {
 const getAverageCost = async () => {
     try {
         const items = await Item.find({}, 'cost'); 
-        const totalCost = items.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-        return totalCost / items.length;
+        let totalCost = 0;
+        let size = 0;
+        for (let i = 0; i < items.length; i++){
+            if (items[i].cost != null || items[i].cost > 0){
+                totalCost += items[i].cost;
+                size++;
+            }
+        }
+        return (totalCost / size).toFixed(2);
     } catch (err) {
         console.error('Error fetching average cost:', err);
         throw err;
