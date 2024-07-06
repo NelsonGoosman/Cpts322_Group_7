@@ -5,3 +5,4 @@ mongoose.connect(process.env.MONGODB_URI, {}) //Connects to mongoDB.
 .then(() => {
         console.log('DB Connected');
 }).catch((err) => console.log(err))
+

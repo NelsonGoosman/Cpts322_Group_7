@@ -7,20 +7,19 @@ const PORT = process.env.PORT || 3000;
 
 const UserRouter = require('./api/user');
 const ItemRouter = require('./api/item')
-
+const InfoRouter = require('./api/dbInfo')
 app.use(cors({
     origin: 'http://localhost:4200', 
     methods: ['GET', 'POST', 'PUT', 'DELETE'], 
     allowedHeaders: ['Content-Type', 'Authorization'] 
   }));
 
-//app.use(bodyParser());
+
 app.use(express.json())
 
 app.use('/user', UserRouter);
 app.use('/item', ItemRouter);
-
-
+app.use('/dbInfo', InfoRouter);
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 })
