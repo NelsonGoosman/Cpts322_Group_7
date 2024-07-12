@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
+const { sendVerificationEmail, verifyEmail } = require('../controls/emailVerification');
 
 const User = require('./../models/User');
 
@@ -9,7 +10,6 @@ router.post('/signup', (req,res) =>{
     name = name.trim(); // .trim() removes whitespace
     email = email.trim();
     password = password.trim();
-
     if(name == " " || email == "" || password == ""){// chceking for empty fields
         res.json({
             status: "FAILED",
@@ -32,6 +32,7 @@ router.post('/signup', (req,res) =>{
         })
     }else {
         User.find({ email }).then(result =>{
+
             if(result.length){
                 res.json({
                     status: "FAILED",
@@ -50,7 +51,8 @@ router.post('/signup', (req,res) =>{
                             status: "SUCCESS",
                             message: "Signup successful!",
                             data: result,
-                        })
+                        });
+                        sendVerificationEmail(email);
                     }).catch(err => {
                         res.json({
                             status: "FAILED",
@@ -86,6 +88,7 @@ router.post('/signin', (req,res) =>{
     }else {
         User.find({email})
         .then(data => {
+            
             if (data.length){
                 const hashedPassword = data[0].password;
                 bcrypt.compare(password, hashedPassword).then(result => {

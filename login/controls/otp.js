@@ -10,12 +10,12 @@ const verifyOTP = async ({ email, otp }) => {
         if (!(email && otp)) {
             throw new Error("Invalid value for email, otp.");
         }
-        const matchOTP = await OTP.findOne({ email,  });
+        const matchOTP = await OTP.findOne({ email });
 
         if (!matchOTP) {
             throw new Error("OTP not found!");
         }
-        const {expires_on} = matchOTP;
+        const { expires_on } = matchOTP;
 
         if (expires_on < Date.now()) {
             await OTP.deleteOne({ email });

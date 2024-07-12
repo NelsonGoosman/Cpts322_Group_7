@@ -1,9 +1,24 @@
 const User = require('../models/User');
-const { sendOTP } = require('./otp');
+const { sendOTP, verifyOTP, deleteOTP } = require('./otp');
 
-const sendVerificationEmail = async ({ email, subject, message }) => {
+const verifyEmail = async ({email, otp}) => {
     try {
-        const existingUser = await User.findOneAndDelete({ email });
+        const validOTP = await verifyOTP({ email, otp });
+        if (!validOTP) {
+            throw new Error("Invalid OTP!");
+        }
+
+        await User.updateOne({ email }, { verified: true });
+        await deleteOTP(email);
+        return;
+    }catch (err){
+        throw err;
+    }
+};
+
+const sendVerificationEmail = async ({ email }) => {
+    try {
+        const existingUser = await User.findOne({ email });
         if (!existingUser) {
             throw new Error("User with email not found!");
         }
@@ -19,4 +34,4 @@ const sendVerificationEmail = async ({ email, subject, message }) => {
         throw err;
     }
 };
-module.exports = { sendVerificationEmail } ;
+module.exports = { sendVerificationEmail, verifyEmail } ;

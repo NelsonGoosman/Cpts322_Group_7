@@ -16,9 +16,9 @@ transporter.verify((error, success) => {
         console.log('Server is ready to take messages');
     }
 });
-const sendEmail = async (mail) => {
+const sendEmail = async (email) => {
     try {
-        await transporter.sendMail(mail);
+        await transporter.sendMail(email);
         return;
     }catch(err){
         throw err;
