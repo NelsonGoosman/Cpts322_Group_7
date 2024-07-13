@@ -3,6 +3,16 @@ const router = express.Router();
 
 const Item = require('../models/item');
 
+const getAllItems = async () => {
+    try {
+        const items = await Item.find({}); 
+        return items;
+    } catch (err) {
+        console.error('Error fetching dates:', err);
+        throw err;
+    }
+};
+
 const getAllDates = async () => {
     try {
         const items = await Item.find({}); 
@@ -89,4 +99,24 @@ router.get('/donaters', async (req, res) => {
         res.status(500).json({ error: 'An error occurred while fetching donors.' });
     }
 });
+
+router.get('/all', async (req, res) => {
+    try{
+        const items =  await getAllItems();
+        res.status(200).send(items);
+    }catch (err){
+        res.status(500).json({error: "An Error ocoured while fetching all items"})
+    }
+})
+
+router.post('/delete', async (req, res) => {
+    const itemID = req.body.id; 
+    try {
+        deleted = await Item.findByIdAndDelete(itemID);
+        console.log(deleted)
+    } catch (error) {
+        console.error('Error saving items:', error);
+    }
+});
+
 module.exports = router;
