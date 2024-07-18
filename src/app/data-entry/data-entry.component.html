@@ -1,0 +1,43 @@
+<nav class="nav">
+  <ul>
+      <li><a href="/home">Home</a></li>
+      <li><a routerLink="/view-entries">View Food Entries</a></li>
+      <li><a routerLink="/data-entry">Add Food Entry</a></li>
+      <li><a href="/view-reports">View Reports</a></li>
+      <li><a href="#">Logout</a></li>
+  </ul>
+</nav>
+<div>
+    <h2>Data Entry Table</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Item Name</th>
+          <th>Item Description</th>
+          <th>Expiration Date</th>
+          <th>Price</th>
+          <th>Donator</th>
+        </tr>
+      </thead>
+      <tbody>
+       @for (item of items; track item.ID){
+        <tr>
+          <td><input type="text" [(ngModel)]="item.name"></td>
+          <td><input type="text" [(ngModel)]="item.description"></td>
+          <td><input type="date" [(ngModel)]="item.expiration"></td>
+          <td><input type="number" [(ngModel)]="item.price" step="1.0"></td>
+          <td><input type="text" [(ngModel)]="item.donatedBy"></td>
+        </tr>
+       }
+      </tbody>
+    </table>
+    <button class="add-row-button" (click)="addRow()">+</button>
+    <button class="submit-button" (click)="submitData()">Submit</button>
+    @if (totalItems >= 10){
+      <a>Item limit! Please send Items to database before adding more.</a>
+    }
+    @if(showError){
+      {{errorMessage}}
+    }
+  </div>
+  
