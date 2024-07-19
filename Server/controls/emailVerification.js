@@ -1,4 +1,4 @@
-const User = require('../Server/models/User');
+const User = require('../models/user');
 const { sendOTP, verifyOTP, deleteOTP } = require('./otp');
 
 const verifyEmail = async ({email, otp}) => {

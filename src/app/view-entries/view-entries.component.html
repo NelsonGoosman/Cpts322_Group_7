@@ -1,40 +1,38 @@
-<div class="container">
-  <mat-form-field appearance="fill" class="filter-form-field">
-    <mat-label>Filter Table</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
-  </mat-form-field>
-  
-  <div class="mat-elevation-z8 table-container">
-    <table mat-table [dataSource]="dataSource" matSort>
-  
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-        <td mat-cell *matCellDef="let row"> {{row.id}} </td>
-      </ng-container>
-  
-      <ng-container matColumnDef="userId">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> User ID </th>
-        <td mat-cell *matCellDef="let row"> {{row.userId}} </td>
-      </ng-container>
-  
-      <ng-container matColumnDef="title">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
-        <td mat-cell *matCellDef="let row"> {{row.title}} </td>
-      </ng-container>
-  
-      <ng-container matColumnDef="body">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Body </th>
-        <td mat-cell *matCellDef="let row"> {{row.body}} </td>
-      </ng-container>
-  
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  
-      <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-      </tr>
+<nav class="nav">
+  <ul>
+      <li><a href="/home">Home</a></li>
+      <li><a routerLink="/view-entries">View Food Entries</a></li>
+      <li><a routerLink="/data-entry">Add Food Entry</a></li>
+      <li><a href="/view-reports">View Reports</a></li>
+      <li><a href="#">Logout</a></li>
+  </ul>
+</nav>
+<div>
+    <h2>View Acme Database</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Item Name</th>
+          <th>Item Description</th>
+          <th>Expiration Date</th>
+          <th>Price</th>
+          <th>Donator</th>
+        </tr>
+      </thead>
+      <tbody>
+       @for (item of items; track item.ID){
+        <tr>
+          <td><span>{{item.name}}</span></td>
+          <td><span>{{item.description}}</span></td>
+          <td><span>{{item.expiration}}</span></td>
+          <td><span>{{item.price}}</span></td>
+          <td><span>{{item.donatedBy}}</span></td>
+          <td><button (click)="remove(item.ID)">Delete</button></td>
+        </tr>
+       }
+      </tbody>
     </table>
-  
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    @if (totalItems == 0){
+      <a>No Items to display!</a>
+    }
   </div>
-</div>

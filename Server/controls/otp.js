@@ -1,5 +1,5 @@
 const OTP = require('../models/otpSchema');
-const User = require('../Server/models/User');
+const User = require('../models/user');
 const { generateOTP } = require('./../util/generateOTP');
 const sendEmail = require('./../util/email');
 const AUTH_EMAIL = process.env;

@@ -41,7 +41,7 @@ export class ViewReportsComponent {
       type: "bar",
       indexLabel: "{y}",
       dataPoints: [
-        {label: "Test", y: 10}
+        {label: "AcmeAdmin", y: 1}
       ]
     }]                
     };

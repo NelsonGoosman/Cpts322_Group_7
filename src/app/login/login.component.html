@@ -11,8 +11,15 @@
     
       <button class="login-button" type="submit">Submit</button>
     </form>
-    <button class="sso-login">Forgot Password?</button>
-    @if (showError == true){
+    @if (showOtp == true){
+      <a>Check your inbox for a two factor authenication code</a>
+      <form (ngSubmit)="authenticate()">
+        <label for="otp">Two Factor Authenication Code</label>
+        <input id="otp" [(ngModel)]="otp" name="otp" type="password">
+        <button class="login-button" type="submit">Two Factor Authenication Code</button>
+      </form>
+    }
+     @if (showError == true){
       <p style="color:red">Error: {{errorMessage}}</p>
     }
   </div>

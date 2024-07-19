@@ -1,34 +1,80 @@
-.container {
-  margin: 20px;
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
 }
-
-.filter-form-field {
+table {
   width: 100%;
+  border-collapse: collapse;
   margin-bottom: 20px;
 }
-
-.table-container {
-  overflow: auto;
-  max-height: 600px;
+table, th, td {
+  border: 1px solid black;
+}
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+th {
+  background-color: #f2f2f2;
+}
+input[type="text"], input[type="date"], input[type="number"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 5px;
+}
+.add-row-button {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.add-row-button:hover {
+  background-color: #45a049;
 }
 
-.mat-header-cell {
-  background-color: #f5f5f5;
-  font-weight: bold;
+
+.submit-button {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #256eeb;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.submit-button:hover {
+  background-color: #1a5bcc;
 }
 
-.mat-row:hover {
-  background-color: #f1f1f1;
+.nav {
+  width: 100%;
+  background-color: #007bff;
 }
 
-.mat-elevation-z8 {
-  border-radius: 8px;
+.nav ul {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
 }
 
-.mat-form-field-appearance-fill .mat-form-field-flex {
-  background-color: #fff;
+.nav ul li {
+  margin: 0 15px;
 }
 
-.mat-paginator {
-  margin-top: 20px;
+.nav ul li a {
+  text-decoration: none;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.nav ul li a:hover {
+  background-color: #0056b3;
 }
